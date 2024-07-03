@@ -5,19 +5,14 @@ class SortColors {
 		int start = 0, current =0, end = intArray.length-1;
 
 		while(current<=end){
-
-			if(intArray[current]==0){
-				int temp = intArray[current];
+			int temp = intArray[current];
+			if(temp==0){
 				intArray[current] = intArray[start];
-				intArray[start] = temp;
-				start++;
+				intArray[start++] = temp;
 				current++;
-			} else if (intArray[current]==2){
-				int temp = intArray[current];
+			} else if (temp==2){
 				intArray[current] = intArray[end];
-				intArray[end] = temp;
-				end--;
-				current++;
+				intArray[end--] = temp;
 			} else {
 				current++;
 			}
@@ -29,8 +24,9 @@ class SortColors {
 
 	public static String arrayToString(int[] intArray) {
 		StringBuilder st = new StringBuilder();
-		for(int a : intArray){
-			st.append(a + ", ");
+		for(int i=0;i<intArray.length;i++){
+			st.append(intArray[i] + (i==intArray.length-1 ? "":", "));
+
 		}
 
 		return "[" + st.toString() + "]";
