@@ -3,10 +3,51 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 
 class RepeatedDNA {
 
 	public static void findRepeatedSequences(String s, int k){
+		int n = s.length();
+		Map<Character, Integer> charMap = new HashMap<>();
+		charMap.put('A', 1);
+		charMap.put('C', 2);
+		charMap.put('G', 3);
+		charMap.put('T', 4);
+
+		int a = 4; // base value since we have only 4 char in this DNA
+
+		List<Integer> numbers = new ArrayList<>(Arrays.asList(new Integer[n]));
+		for(int i=0; i<n; i++){
+			numbers.set(i, charMap.get(s.charAt(i)));
+		}
+
+		int hashValue = 0;
+
+		Set<Integer> hashSet = new HashSet<>();
+        Set<String> subStrings = new HashSet<>();
+
+        for (int i = 0; i+k <= n; i++) {
+        	if(i==0){
+        		for (int j = 0; j < k; j++) {
+        			hashValue += numbers.get(j) * (int) Math.pow(a, k - j - 1); 
+        		}
+        	} else {
+        		int previousHashValue = hashValue;
+        		hashValue = ((previousHashValue - numbers.get(i - 1) * (int) Math.pow(a, k - 1)) * a) + numbers.get(i + k - 1);
+        	}
+
+        	if(hashSet.contains(hashValue)){
+        		subStrings.add(s.substring(i, i + k));
+        	}
+
+        	 hashSet.add(hashValue);
+        }
+
+
+
+	/*		
 		List<String> subStrings = new ArrayList<>();
 		Map<String, Integer> seen = new HashMap<>();
 		for(int i=0; i+k<= s.length(); i++){
@@ -16,7 +57,7 @@ class RepeatedDNA {
 				subStrings.add(subString);
 			}
 		}
-
+	*/
 		System.out.println("The repeated strings are :" + subStrings);
 	}
 
