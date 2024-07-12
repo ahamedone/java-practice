@@ -1,7 +1,23 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
+
 class RepeatedDNA {
 
-	public static findRepeatedSequences(String s, int k){
-		int 
+	public static void findRepeatedSequences(String s, int k){
+		List<String> subStrings = new ArrayList<>();
+		Map<String, Integer> seen = new HashMap<>();
+		for(int i=0; i+k<= s.length(); i++){
+			String subString = s.substring(i, i+k);
+			seen.put(subString, seen.getOrDefault(subString, 0)+1);
+			if(seen.get(subString) == 2){
+				subStrings.add(subString);
+			}
+		}
+
+		System.out.println("The repeated strings are :" + subStrings);
 	}
 
 
