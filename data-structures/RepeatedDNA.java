@@ -1,6 +1,8 @@
 class RepeatedDNA {
 
-
+	public static findRepeatedSequences(String s, int k){
+		int 
+	}
 
 
 	public static void main(String[] args) {
