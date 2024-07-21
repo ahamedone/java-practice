@@ -11,13 +11,12 @@ class LongestSubstringWithNoRepeatingChar {
 
 		for(; right < s.length(); right++){
 			char c = s.charAt(right);
-			charMap.put(c, charMap.getOrDefault(c, 0)+1);
-			while(charMap.get(c) > 1) {
-				c = s.charAt(left);
-				charMap.put(c, charMap.get(c)-1);
-				left += 1;
-			}
-			maxLongestSubstring = Math.max(right-left+1, maxLongestSubstring);
+			if(charMap.containsKey(c) && charMap.get(c) >= left) { 
+				left = charMap.get(c) + 1;
+			} 
+			int strLength = right - left + 1;
+			maxLongestSubstring = Math.max(strLength, maxLongestSubstring);
+			charMap.put(c, right);
 		}
 		return maxLongestSubstring;
 	}
