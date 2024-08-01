@@ -19,15 +19,15 @@ class InsertInterval {
 			outputList.add(existingIntervals[pointer++]);
 		}
 
-		if(outputList.size()==0 || outputList.get(outputList.size() - 1)[1] < begin){
+		if(outputList.size()==0 || getLastInterval(outputList)[1] < begin){
 			outputList.add(newInterval);
 		} else {
-			int[] lastArray = outputList.get(outputList.size() - 1);
+			int[] lastArray = getLastInterval(outputList);
 			lastArray[1] = Math.max(lastArray[1], newInterval[1]);
 		}
 
 		while(pointer < length) {
-			int[] lastArray = outputList.get(outputList.size() - 1);
+			int[] lastArray = getLastInterval(outputList);
 			int[] existingArray = existingIntervals[pointer];
 			if(lastArray[1] < existingArray[0]){
 				outputList.add(existingArray);
@@ -39,6 +39,13 @@ class InsertInterval {
 
 		return outputList.toArray(new int[0][0]);
 
+	}
+
+	public static int[] getLastInterval(List<int[]> arrays){
+		if(null == arrays || arrays.isEmpty()){
+			return new int[]{0,0};
+		}
+		return arrays.get(arrays.size()-1);
 	}
 
 
