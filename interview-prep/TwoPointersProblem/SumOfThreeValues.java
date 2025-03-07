@@ -24,15 +24,15 @@ class SumOfThreeValues {
         } 
     }
 
-    public static List<List<Integer>> threeSum(int[] nums) {
+    public static List<List<Integer>> threeSum(int[] nums) { // This functions overal time complexity is O(n^2). 
         // sort the arrays
-        Arrays.sort(nums);
+        Arrays.sort(nums); // Arrays.sort() uses the variant of quicksort. Hence the average is O(n log n), with worse case scenario of O(n^2)
 
         // result List
         List<List<Integer>> result = new ArrayList<>();
 
         int n = nums.length;
-        for (int first = 0; first < n - 2; first++) {
+        for (int first = 0; first < n - 2; first++) { // loops run n-2 times, Hence O(n)
 
             // If an element is greater than 0, which means all the elements to the right too will be greater than the 1 and we can stop here.
             if(nums[first] > 0){
@@ -47,7 +47,7 @@ class SumOfThreeValues {
             int second = first+1;
             int third = n-1;
 
-            while(second < third){
+            while(second < third){ // this while loops run O(n)
                 int total = nums[first] + nums[second] + nums[third];
                 if(total < 0){
                     // This means sum is not enough, so we increment the second element to a higher value, in the sorted array.
@@ -61,7 +61,7 @@ class SumOfThreeValues {
 
                     // shrink the array, to avoid the duplicate triplets.
                     second++; third--;
-                    while (second < third && nums[second] == nums[second - 1]) {
+                    while (second < third && nums[second] == nums[second - 1]) { // this can too run O(n) times, however, this will reduce the runs require for the outerloop, hence can we left.
                         second++;
                     }
                     while (second < third && nums[third] == nums[third + 1]) {
