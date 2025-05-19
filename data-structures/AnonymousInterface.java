@@ -8,6 +8,7 @@ import java.util.function.UnaryOperator;
 import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
+import java.util.Map;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -62,6 +63,12 @@ class AnonymousInterface {
 														.collect(Collectors.groupingBy(String::length));
 		System.out.println(lengthNameMaps);
 
+
+
+		// Partioning By
+		Stream<String> names1 = Stream.of("Joe", "Mark", "Issac", "Alan", "Randy", "Peter", "Abhraham", "Aady");
+		Map<Boolean, List<String>> partioningMap = names1.collect(Collectors.partitioningBy(s-> s.startsWith("A")));
+		System.out.println(partioningMap);
 
 
 	}
