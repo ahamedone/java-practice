@@ -8,6 +8,7 @@ import java.util.function.UnaryOperator;
 import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.Map;
 
 import java.util.List;
@@ -70,6 +71,21 @@ class AnonymousInterface {
 		Map<Boolean, List<String>> partioningMap = names1.collect(Collectors.partitioningBy(s-> s.startsWith("A")));
 		System.out.println(partioningMap);
 
+		// Sorted
+
+		Stream<String> toSort = Stream.of("Joe", "Mark", "Issac", "Alan", "Randy", "Peter", "Abhraham", "Aady");
+		toSort.peek(name -> System.out.println("0 : " + name))
+				.filter(name -> name.length() <= 4)
+				.peek(name -> System.out.println("1 : " + name))
+				.sorted()
+				.peek(name -> System.out.println("2 : " + name))
+				.limit(2)
+				.forEach(name -> System.out.println("3 : " + name));
+
+		// IntStream
+
+		IntStream intStream = Stream.of(1, 2, 3).mapToInt(n -> n);
+		System.out.println("Sum is " + intStream.sum());
 
 	}
 }
