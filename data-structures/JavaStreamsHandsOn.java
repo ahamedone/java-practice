@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.OptionalDouble;
+import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -63,6 +60,43 @@ public class JavaStreamsHandsOn {
                                             new Person1("Peter", "Castle", 29));
         Person1 oldestPerson = person1List.stream().max(Person1::compareTo).orElse(null);
         System.out.println("Oldest person : " + oldestPerson);
+
+        Optional<String> grade1 = getGrader(50);
+        System.out.println("Grade1 : " + grade1.orElse("UNKNOWN"));
+        Optional<String> grade2 = getGrader(50);
+        if (grade2.isPresent()) {
+            grade2.ifPresent(System.out::println);
+        } else {
+            System.out.println(grade2.orElse("Empty"));
+        }
+    }
+    /*
+        Code a method public static Optional<String> getGrade(int marks)
+            a. in the method getGrade:
+                i. declare an empty optional, typed for String called grade
+                ii. insert the following code:
+                    if (marks > 50) {grade = Optional.of(“PASS”);} else {grade.of(“FAIL”);}
+            b. in main():
+                i. declare an Optional, typed for String named grade1 which is initialised to the return value of calling getGrade(50)
+                ii. declare an Optional, typed for String named grade2 which is initialised to the return value of calling getGrade(55)
+                iii. using orElse() on grade1, output the value of grade1 or “UNKNOWN”
+                iv. if(grade2.isPresent()) is true: use ifPresent(Consumer) to output the contents of grade2; if false, use orElse() to output the contents of grade2 or “Empty”
+                v. Notes:
+                    1. Optional’s are immutable.
+                    2. Optional.of(null); // NullPointerException
+                    3. Optional.ofNullable(null); // Optional.empty returned
+         */
+    public static Optional<String> getGrader(int marks) {
+        System.out.println("Marks : " + marks);
+        Optional<String> grade = Optional.empty();
+        if(marks > 50) {
+            grade = Optional.of("PASS");
+        } else if(marks < 50) {
+            grade = Optional.of("FAIL");
+        } else {
+            grade = Optional.empty();
+        }
+        return grade;
     }
 }
 
