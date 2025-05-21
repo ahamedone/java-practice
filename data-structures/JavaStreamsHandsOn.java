@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -69,6 +70,48 @@ public class JavaStreamsHandsOn {
         } else {
             System.out.println(grade2.orElse("Empty"));
         }
+
+        /*
+        6. Given the Book class (in the zip file), declare a List typed for Book with the following Book’s:
+            a. title=”Thinking in Java”, price=30.0
+            b. title=”Java in 24 hrs”, price=20.0
+            c. title=”Java Recipes”, price=10.0
+            Stream the books and calculate the average price of the books whose price is > 10.
+            Change the filter to books whose price is > 90. Ensure you do not get an exception.
+         */
+
+        List<Book> bookList = List.of(  new Book("Thinking in Java", 30.0F),
+                                        new Book("Java in 24 hrs", 20.0F),
+                                        new Book("JAva Recipes", 10.0F));
+
+        double avg1 = bookList.stream()
+                      .filter( n -> n.price > 90)
+                      .mapToDouble(n -> n.price)
+                      .average().orElse(0);
+        double avg2 = bookList.stream()
+                    .filter( n -> n.price > 90)
+                            .collect(Collectors.averagingDouble( n-> n.price));
+        System.out.println("Books Avg : " + avg1 + " : " + avg2);
+
+        /*
+        Given the Book class (in the zip file), declare a List typed for Book with the following Book’s:
+            a. title=”Atlas Shrugged”, price=10.0
+            b. title=”Freedom at Midnight”, price=5.0
+            c. title=”Gone with the wind”, price=5.0
+        Stream the books and instantiate a Map named ‘bookMap’ that maps the book title to its price.
+        To do this use the collect(Collectors.toMap(Function fnToGetKey, Function fnToGetValue)).
+        Iterate through ‘bookMap’ (using the Map forEach(BiConsumer) method).
+        The BiConsumer only outputs prices where the title begins with “A”
+         */
+
+        List<Book> bookList1 = List.of( new Book("Atlas Shrugged", 10.0F),
+                                        new Book("Freedom at Midnight", 5.0F),
+                                        new Book("Gone with the wind", 5.0F));
+        Map<String, Float> bookMap = bookList1.stream().collect(Collectors.toMap(Book::getTitle, Book::getPrice));
+        System.out.println(bookMap);
+        bookMap.entrySet().stream()
+                .filter(e -> e.getKey().startsWith("A"))
+                .forEach(e -> System.out.println(e.getValue()));
     }
     /*
         Code a method public static Optional<String> getGrade(int marks)
@@ -138,5 +181,18 @@ class Person1 implements Comparable<Person1> {
     public String toString() {
         return firstName + " " + lastName + " " + age;
     }
+}
+
+class Book {
+    String title;
+    Float price;
+
+    public Book(String title, Float price) {
+        this.title = title;
+        this.price = price;
+    }
+
+    public String getTitle() { return title; }
+    public Float getPrice() { return price; }
 }
 
