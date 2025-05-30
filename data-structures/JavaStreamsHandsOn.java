@@ -112,6 +112,45 @@ public class JavaStreamsHandsOn {
         bookMap.entrySet().stream()
                 .filter(e -> e.getKey().startsWith("A"))
                 .forEach(e -> System.out.println(e.getValue()));
+
+        /*
+        8. Given the Book class (in the zip file), declare a List typed for Book with the following Book’s:
+            a. title=”Gone with the wind”, price=5.0
+            b. title=”Gone with the wind”, price=10.0
+            c. title=”Atlas shrugged”, price=15.0
+            In a pipeline which has no return type: (QID 2.1847)
+                 stream the books
+                 using the collect() method, generate a Map that maps the book title to its price
+                 using forEach(), output the title and price of each entry in the map
+            What happened and why? Fix this by using the Collectors.toMap(Function, Function, BinaryOperator) method.
+         */
+
+        List<Book> bookList2 = List.of( new Book("Gone with the wind", 5.0F),
+                                        new Book("Gone with the wind", 10.0F),
+                                        new Book("Atlas shrugged", 15.0F));
+        bookList2.stream()
+                .collect(Collectors.toMap(Book::getTitle, Book::getPrice, Float::sum))
+                .forEach((k, v) -> System.out.println(k + " : " + v));
+
+        /***
+         * Given the Person class (in the zip file), declare a List typed for Person with the following Person’s:
+         * a. name=”Bob”, age=31
+         * b. name=”Paul”, age=32
+         * c. name=”John”, age=33
+         * Pipeline the following where the return type is double: (QID 2.1810)
+         *  stream the people
+         *  filter the stream for Person’s whose age is < 30
+         *  map to int primitives
+         *  calculate the average age.
+         * This should generate a NoSuchElementException. Using orElse(), fix the pipeline (not the filter) so that 0.0 is returned instead of an exception being generated.
+         */
+
+        List<Person1> person1List2 = List.of(new Person1("Bob", "", 31), new Person1("Paul", "Burke", 32), new Person1("John", "", 33));
+        OptionalDouble averageAge = person1List2.stream().filter(x -> x.age >= 30).mapToInt(x -> x.age).average();
+        System.out.println("Average Age : " + averageAge.orElseGet(()->0.0));
+
+
+
     }
     /*
         Code a method public static Optional<String> getGrade(int marks)
